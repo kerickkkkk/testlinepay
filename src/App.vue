@@ -1,15 +1,17 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 import axios from 'axios'
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 const orderNo = ref('')
 const url = ref('')
-
+const urlCombind = computed(()=> {
+  const res = `${backendUrl}/v1/line_pay/${orderNo.value}`
+  console.log(res);
+  return res
+})
 const linepay = () => {
-  url.value = `${backendUrl}/v1/line_pay/${orderNo.value}`
-  console.log(url.value);
-  axios.post(`${url.value}`)
+  axios.post(`${urlCombind.value}`)
     .then((res) => console.log(res))
     .catch((error) => console.log(error))
 }
