@@ -25,7 +25,7 @@ const linepay = () => {
       axios 送出
     </button>
     <form
-      :action="url"
+      :action="urlCombind"
       method="POST"
     >
       <button type="submit">
