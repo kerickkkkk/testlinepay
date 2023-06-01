@@ -1,9 +1,15 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import {ref} from 'vue'
 import axios from 'axios'
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL
+const orderNo = ref('')
+const url = ref('')
+
 const linepay = () => {
-  axios.post('http://localhost:3000/v1/line_pay/20230601075358')
+  url.value = `${backendUrl}/v1/line_pay/${orderNo.value}`
+  console.log(url.value);
+  axios.post(`${url.value}`)
     .then((res) => console.log(res))
     .catch((error) => console.log(error))
 }
@@ -12,25 +18,21 @@ const linepay = () => {
 
 <template>
   <div>
+    <input type="text" v-model="orderNo">
      <button @click="linepay">
-    axios 送出
-  </button>
-  <form
-    action="http://localhost:3000/v1/line_pay/20230601075358"
-    method="POST"
-  >
-    <button type="submit">
-      送出表單
+      axios 送出
     </button>
-  </form>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+    <form
+      :action="url"
+      method="POST"
+    >
+      <button type="submit">
+        送出表單
+      </button>
+    </form>
+    <hr>
+    <RouterView/>
+    </div>
 </template>
 
 <style scoped>
