@@ -5,6 +5,7 @@ import axios from 'axios'
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 const orderNo = ref('')
 const url = ref('')
+const token= ref('')
 const urlCombind = computed(()=> {
   const res = `${backendUrl}/v1/line_pay/${orderNo.value}`
   console.log(res);
@@ -28,6 +29,7 @@ const linepay = () => {
       :action="urlCombind"
       method="POST"
     >
+      <input type="text" name="_token" :value="token">
       <button type="submit">
         送出表單
       </button>
